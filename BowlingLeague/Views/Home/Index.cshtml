@@ -4,11 +4,36 @@
 @model List<Bowler>
 <h1>Bowlers</h1>
 
-<ul>
-    @foreach (var b in Model)
-            {
-                <li>@b.BowlerID - @b.BowlerFirstName @b.BowlerLastName</li>
+<table class="table table-bordered table-striped table">
+    <thead class="font-weight-bolder">
+        <tr>
+            <td>First Name</td>
+            <td>Middle Initial</td>
+            <td>Last Name</td>
+            <td>Address</td>
+            <td>City</td>
+            <td>State</td>
+            <td>Zip Code</td>
+            <td>Phone Number</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Model)
+        {
+            <tr>
+                <td>@b.BowlerFirstName</td>
+                <td>@b.BowlerMiddleInit</td>
+                <td>@b.BowlerLastName</td>
+                <td>@b.BowlerAddress</td>
+                <td>@b.BowlerCity</td>
+                <td>@b.BowlerState</td>
+                <td>@b.BowlerZip</td>
+                <td>@b.BowlerPhoneNumber</td>
 
-            }
+                @*<td><a asp-controller="Home" asp-action="Edit" asp-route-MovieId="@b.BowlerID">Edit</a></td>
+                <td><a asp-controller="Home" asp-action="Delete" asp-route-MovieId="@b.BowlerID">Delete</a></td>*@
+            </tr>
+        }
+    </tbody>
+</table>
 
-</ul>
