@@ -25,5 +25,58 @@ namespace BowlingLeague.Controllers
             return View(bowl);
         }
 
+        [HttpPost]
+        public IActionResult MovieForm(Bowler ab)
+        {
+            ViewBag.Teams = BowlersDbContext.Teams.ToList();
+            if (ModelState.IsValid)
+            {
+                BowlersDbContext.Add(ab);
+                BowlersDbContext.SaveChanges();
+
+                return View("Confirmation", ab);
+            }
+            else
+            {
+                return View(ab);
+            }
+
+        }
+        [HttpGet]
+        public IActionResult BowlerList()
+        {
+            var movie = BowlersDbContext.Bowlers
+            .Include(x => x.TeamName)
+            .OrderBy(x => x.TeamID)
+            .ToList();
+            return View(Bowler);
+        }
+        [HttpGet]
+        public IActionResult Edit(int BowlerID)
+        {
+            ViewBag.Teams = BowlersDbContext.Teams.ToList();
+            var category = BowlersDbContext.Bowlers.Single(x => x.BowlerID == BowlerID);
+            return View("BowlerForm", Team);
+        }
+        [HttpPost]
+        public IActionResult Edit(Bowler ab)
+        {
+            BowlersDbContext.Update(ab);
+            BowlersDbContext.SaveChanges();
+            return RedirectToAction("BowlerList");
+        }
+        [HttpGet]
+        public IActionResult Delete(int BowlerID)
+        {
+            var b = BowlersDbContext.Bowlers.Single(x => x.BowlerID == BowlerID);
+            return View(b);
+        }
+        [HttpPost]
+        public IActionResult Delete(Bowler ab)
+        {
+            BowlersDbContext.Bowlers.Remove(ab);
+            BowlersDbContext.SaveChanges();
+            return RedirectToAction("BowlerList");
+        }
     }
 }
